@@ -14,12 +14,15 @@ const toggleBtn = event => { // para habilitar o desabilitar el boton que envia 
     const file = event.target.files[0];
     console.log(file);
     btnSend.disabled = file === undefined;
+    inputName.value = "size_modified_now_random_UUID.PNG";
     if (btnSend.disabled) return;
     btnSend.disabled = !imageTypes.includes(file.type);
+    inputName.value = "size_modified_now_random_UUID.PNG";
     if (btnSend.disabled) return;
     image.blob = file;
     btnSend.disabled = false;
     image.name = generateFileId(file);
+    inputName.value = `${image.name}.${file.type.slice(6)}`;
 };
 
 const prepareImage = ({ name, blob }) => { // prepara el contenido de la solicitud, en este caso es formData pues enviaremos un objeto de tipo File. al igual que JSON, formData es otra estructura empleada para enviar datos en el content
@@ -53,6 +56,7 @@ const sendImage = async () => {
         const response = await uploadImageToImgbb(imgbb);
         console.log(response); // respuesta de la solicitud
         console.log(response.data.data.url); // accesso a la URL de la imagen que se subio al servidor
+        alert("Imagen subida al servidor: " + response.data.data.url) // notificación
     } catch (error) {
         console.log(error);
     }
