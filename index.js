@@ -17,7 +17,6 @@ const toggleBtn = event => { // para habilitar o desabilitar el boton que envia 
     inputName.value = "size_modified_now_random_UUID.PNG";
     if (btnSend.disabled) return;
     btnSend.disabled = !imageTypes.includes(file.type);
-    inputName.value = "size_modified_now_random_UUID.PNG";
     if (btnSend.disabled) return;
     image.blob = file;
     btnSend.disabled = false;
