@@ -55,9 +55,11 @@ const sendImage = async () => {
         const response = await uploadImageToImgbb(imgbb);
         console.log(response); // respuesta de la solicitud
         console.log(response.data.data.url); // accesso a la URL de la imagen que se subio al servidor
-        alert("Imagen subida al servidor: " + response.data.data.url) // notificación
+        alert(`Imagen subida al servidor: ${response.data.data.url}`); // notificación
     } catch (error) {
         console.log(error);
+        alert(`Ocurrio un error en el servidor: Para mas detalles
+        revisar la consola del navegador donde se expone el fallo`);
     }
 };
 
