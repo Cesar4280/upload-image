@@ -2,7 +2,7 @@ const image = { name: null, blob: null }; // usa useState para capturar los dato
 const { name: inputName, file: inputFile, send: btnSend, reset: btnReset } = document.forms[0]; // capturar las referencias de los botones y el input file
 
 const getRandom = () => Math.floor(Math.random() * 1001);
-const imageTypes = ["png", "jpg", "jpeg"].map(type => "image/" + type);
+const imageTypes = ["png", "jpg", "jpeg"].map(type => `image/${type}`);
 
 const generateFileId = ({ size, lastModified }) => { // genera un nombre unico al archivo, recibe como parametro el evente File que sucede cuando se sube un archivo atraves del input file
     const items = [size, lastModified, Date.now(), getRandom()].map(data => data.toString(36));
