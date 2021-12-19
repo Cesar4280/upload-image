@@ -58,8 +58,7 @@ const sendImage = async () => {
         alert(`Imagen subida al servidor: ${response.data.data.url}`); // notificación
     } catch (error) {
         console.log(error);
-        alert(`Ocurrio un error en el servidor: Para mas detalles
-        revisar la consola del navegador donde se expone el fallo`);
+        alert("Ocurrio un error en el servidor: Para mas detalles revisar la consola donde se expone el fallo");
     }
 };
 
