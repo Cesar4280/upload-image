@@ -1,13 +1,17 @@
 const image = { name: null, blob: null }; // usa useState para capturar los datos
+const imageTypes = ["png", "jpg", "jpeg"].map(type => `image/${type}`); // formatos de imagen permitidas
 const { name: inputName, file: inputFile, send: btnSend, reset: btnReset } = document.forms[0]; // capturar las referencias de los botones y el input file
 
-const getRandom = () => Math.floor(Math.random() * 1001);
-const imageTypes = ["png", "jpg", "jpeg"].map(type => `image/${type}`);
+const generateRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
+
+const generateUuidBase36 = () => crypto.randomUUID().split("-").map(string => parseInt(string, 16).toString(36)).join("");
 
 const generateFileId = ({ size, lastModified }) => { // genera un nombre unico al archivo, recibe como parametro el evente File que sucede cuando se sube un archivo atraves del input file
-    const items = [size, lastModified, Date.now(), getRandom()].map(data => data.toString(36));
-    items.push(crypto.randomUUID());
-    return items.join("").replaceAll("-", "");
+    const NOW    = Date.now();
+    const RANDOM = generateRandomInt(1, 1000);
+    const UUID   = generateUuidBase36();
+    console.log(UUID);
+    return [UUID, ...[NOW, RANDOM, size, lastModified].map(number => number.toString(36))].join("");
 };
 
 const toggleBtn = event => { // para habilitar o desabilitar el boton que envia la solicitud de subir la imagen a imgBB
@@ -68,23 +72,15 @@ const sendImage = async () => {
         console.log(response); // respuesta de la solicitud
         console.log(response.data.data.url); // accesso a la URL de la imagen que se subio al servidor
         const product = await addProduct({ // campos a enviar a la API local
-            name:        "simple keyboard",
-            price:       10000,
-            image_url:   response.data.data.url,
+            name: "simple keyboard",
+            price: 10000,
+            image_url: response.data.data.url,
             description: "A lenovo keyboard"
         });
         alert(`Transacción finalizada: ${product.data.message}`); // notificación
     } catch (error) {
         console.log(error);
         alert("Ocurrio un error en el servidor: Para mas detalles revisar la consola donde se expone el fallo");
-    }
-};
-
-const commitTransaction = async () => {
-    try {
-        
-    } catch (error) {
-        
     }
 };
 
