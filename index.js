@@ -46,6 +46,18 @@ const uploadImageToImgbb = async ({ url, key }) => { // este metodo es el que en
     }
 };
 
+const addProduct = async data => {
+    try {
+        const URL = "http://127.0.0.1:3000/api/products";
+        const config = { headers: { Accept: "application/json", "content-type": "application/json" } };
+        const response = await axios.post(URL, data, config);
+        console.log(response);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+};
+
 const sendImage = async () => {
     try {
         const imgbb = {
@@ -55,10 +67,24 @@ const sendImage = async () => {
         const response = await uploadImageToImgbb(imgbb);
         console.log(response); // respuesta de la solicitud
         console.log(response.data.data.url); // accesso a la URL de la imagen que se subio al servidor
-        alert(`Imagen subida al servidor: ${response.data.data.url}`); // notificación
+        const product = await addProduct({ // campos a enviar a la API local
+            name:        "simple keyboard",
+            price:       10000,
+            image_url:   response.data.data.url,
+            description: "A lenovo keyboard"
+        });
+        alert(`Transacción finalizada: ${product.data.message}`); // notificación
     } catch (error) {
         console.log(error);
         alert("Ocurrio un error en el servidor: Para mas detalles revisar la consola donde se expone el fallo");
+    }
+};
+
+const commitTransaction = async () => {
+    try {
+        
+    } catch (error) {
+        
     }
 };
 
